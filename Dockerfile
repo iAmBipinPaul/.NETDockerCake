@@ -24,10 +24,9 @@ ENV DOTNET_USE_POLLING_FILE_WATCHER=true \
     NUGET_XMLDOC_MODE=skip
 
 # Trigger first run experience by running arbitrary cmd to populate local package cache
-RUN dotnet help
+RUN apt-get update && apt-get install curl -y
 RUN curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 RUN chmod +x /usr/local/bin/docker-compose
-RUN apt-get -y install dotnet-sdk-2.2
 RUN dotnet tool install -g Cake.Tool
 ENV PATH="${PATH}:/root/.dotnet/tools"
 ADD entrypoint.sh  /entrypoint.sh
